@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  go:
+    container_name: go-app
+    hostname: go
+    build:
+      context: ../../
+      dockerfile: docker/dev/go/Dockerfile
+    volumes:
+      - ../../.env:/.env
+    ports:
+      - "3000:3000"
+    restart: on-failure
