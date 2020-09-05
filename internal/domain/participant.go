@@ -7,7 +7,7 @@ import (
 
 //go:generate mockery -name=ParticipantRepository
 type ParticipantRepository interface {
-	FindByID(participantRef ParticipantReference) (Participant, error)
+	FindByRef(participantRef ParticipantReference) (Participant, error)
 	FindAll() ([]Participant, error)
 	Add(participant Participant) error
 	Update(participant Participant) error

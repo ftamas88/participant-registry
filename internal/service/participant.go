@@ -17,8 +17,8 @@ func NewParticipantService(rep domain.ParticipantRepository) *Participant {
 	}
 }
 
-func (srv *Participant) GetParticipant(ref string) (domain.Participant, error) {
-	p, err := srv.repository.FindByID(domain.ParticipantReference(ref))
+func (srv *Participant) Get(ref string) (domain.Participant, error) {
+	p, err := srv.repository.FindByRef(domain.ParticipantReference(ref))
 	if err != nil {
 		return p, errors.Wrap(err, "unable to find participant")
 	}
@@ -26,12 +26,12 @@ func (srv *Participant) GetParticipant(ref string) (domain.Participant, error) {
 	return p, nil
 }
 
-func (srv *Participant) CreateParticipant(p domain.Participant) error {
+func (srv *Participant) Create(p domain.Participant) error {
 	return srv.repository.Add(p)
 }
 
-func (srv *Participant) UpdateParticipant(ref string, p domain.Participant) error {
-	pInDB, err := srv.repository.FindByID(domain.ParticipantReference(ref))
+func (srv *Participant) Update(ref string, p domain.Participant) error {
+	pInDB, err := srv.repository.FindByRef(domain.ParticipantReference(ref))
 	if err != nil {
 		return errors.Wrap(err, "unable to find participant")
 	}
@@ -46,7 +46,7 @@ func (srv *Participant) UpdateParticipant(ref string, p domain.Participant) erro
 	return srv.repository.Update(pInDB)
 }
 
-func (srv *Participant) RemoveParticipant(ref string) error {
+func (srv *Participant) Delete(ref string) error {
 	return srv.repository.Remove(
 		domain.ParticipantReference(ref),
 	)

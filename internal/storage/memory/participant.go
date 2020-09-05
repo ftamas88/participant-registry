@@ -20,7 +20,7 @@ func NewParticipantRepository() *ParticipantRepository {
 	}
 }
 
-func (repo *ParticipantRepository) FindByID(ref domain.ParticipantReference) (domain.Participant, error) {
+func (repo *ParticipantRepository) FindByRef(ref domain.ParticipantReference) (domain.Participant, error) {
 	repo.mu.RLock()
 	defer repo.mu.RUnlock()
 

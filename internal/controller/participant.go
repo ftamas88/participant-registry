@@ -24,7 +24,7 @@ func (pc *ParticipantController) Index(w http.ResponseWriter, _ *http.Request) {
 }
 
 func (pc *ParticipantController) Get(w http.ResponseWriter, r *http.Request) {
-	p, err := pc.Service.GetParticipant(mux.Vars(r)["ref"])
+	p, err := pc.Service.Get(mux.Vars(r)["ref"])
 	if err != nil {
 		handleParticipantError(w, err, http.StatusNotFound)
 
@@ -42,7 +42,7 @@ func (pc *ParticipantController) Create(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	err := pc.Service.CreateParticipant(p)
+	err := pc.Service.Create(p)
 	if err != nil {
 		handleParticipantError(w, err, http.StatusInternalServerError)
 
@@ -60,7 +60,7 @@ func (pc *ParticipantController) Update(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	err := pc.Service.UpdateParticipant(mux.Vars(r)["ref"], p)
+	err := pc.Service.Update(mux.Vars(r)["ref"], p)
 	if err != nil {
 		handleParticipantError(w, err, http.StatusBadRequest)
 
@@ -71,7 +71,7 @@ func (pc *ParticipantController) Update(w http.ResponseWriter, r *http.Request) 
 }
 
 func (pc *ParticipantController) Delete(w http.ResponseWriter, r *http.Request) {
-	err := pc.Service.RemoveParticipant(mux.Vars(r)["ref"])
+	err := pc.Service.Delete(mux.Vars(r)["ref"])
 	if err != nil {
 		handleParticipantError(w, err, http.StatusBadRequest)
 

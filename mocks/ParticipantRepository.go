@@ -50,8 +50,8 @@ func (_m *ParticipantRepository) FindAll() ([]domain.Participant, error) {
 	return r0, r1
 }
 
-// FindByID provides a mock function with given fields: participantRef
-func (_m *ParticipantRepository) FindByID(participantRef domain.ParticipantReference) (domain.Participant, error) {
+// FindByRef provides a mock function with given fields: participantRef
+func (_m *ParticipantRepository) FindByRef(participantRef domain.ParticipantReference) (domain.Participant, error) {
 	ret := _m.Called(participantRef)
 
 	var r0 domain.Participant
