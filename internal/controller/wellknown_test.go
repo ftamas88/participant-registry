@@ -22,7 +22,6 @@ func TestWellKnownController_Health(t *testing.T) {
 	assert.Equal(t, resp.StatusCode, http.StatusOK)
 	assert.JSONEq(t, `
 		{
-			"operation_id": "health_get",
 			"data": {
 				"status": "OK"
 			},
@@ -44,16 +43,14 @@ func TestWellKnownController_ServiceInformation(t *testing.T) {
 	assert.Equal(t, resp.StatusCode, http.StatusOK)
 	assert.JSONEq(t, `
 		{
-			"operation_id": "service_get",
 			"data": {
 				"api_documentation": "",
-				"description": "",
-				"develop_url": "",
-				"original_build_specification": "",
-				"repository": "",
-				"service_name": "",
-				"slos": ""
-			},
+				"description": "This is a participant registry microservice which supports adding, updating, removing and retrieving personal information about participants in the study.",
+				"develop_url": "http://localhost:3000",
+				"repository": "https://gitlab.com/ftamas88/grail",
+				"service_name": "Grail - participant registry",
+				"slos":""
+			}, 
 			"metadata": null
 		}
 	`, string(body))
@@ -75,7 +72,6 @@ func TestWellKnownController_Root(t *testing.T) {
 	assert.Equal(t, resp.StatusCode, http.StatusOK)
 	assert.JSONEq(t, `
 	{
-		"operation_id": "root_get",
 		"data": {
 			"commit_hash": "123abc",
 			"service": "grail-participant-registry",

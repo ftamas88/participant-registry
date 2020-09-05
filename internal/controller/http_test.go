@@ -19,7 +19,6 @@ func TestWriteJSONResponse(t *testing.T) {
 			"successful response",
 			200,
 			Response{
-				OperationID: "foo_get",
 				Data: map[string]string{
 					"foo": "bar",
 				},
@@ -37,7 +36,6 @@ func TestWriteJSONResponse(t *testing.T) {
 			"bad request",
 			400,
 			Response{
-				OperationID: "foo_get",
 				Data: map[string]string{
 					"foo": "bar",
 				},

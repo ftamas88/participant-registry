@@ -18,12 +18,12 @@ type ParticipantID string
 type ParticipantReference string
 
 type Participant struct {
-	ID          ParticipantID        `json:"id"`
-	Reference   ParticipantReference `json:"reference"`
-	Name        string               `json:"name"`
-	DateOfBirth time.Time            `json:"date_of_birth"`
-	Phone       string               `json:"phone"`
-	Address     ParticipantAddress   `json:"address"`
+	ID          ParticipantID        `json:"id,omitempty"`
+	Reference   ParticipantReference `json:"reference,omitempty"`
+	Name        string               `json:"name,omitempty"`
+	DateOfBirth time.Time            `json:"date_of_birth,omitempty"`
+	Phone       string               `json:"phone,omitempty"`
+	Address     ParticipantAddress   `json:"address,omitempty"`
 }
 
 type ParticipantAddress struct {

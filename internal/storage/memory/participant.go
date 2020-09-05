@@ -2,7 +2,6 @@ package memory
 
 import (
 	"grail-participant-registry/internal/domain"
-	"strings"
 	"sync"
 
 	"github.com/google/uuid"
@@ -55,10 +54,6 @@ func (repo *ParticipantRepository) FindAll() ([]domain.Participant, error) {
 func (repo *ParticipantRepository) Add(participant domain.Participant) error {
 	repo.mu.Lock()
 	defer repo.mu.Unlock()
-
-	participant.Reference = domain.ParticipantReference(
-		strings.ToUpper(string(participant.Reference)),
-	)
 
 	_, ok := repo.participants[participant.Reference]
 	if ok {

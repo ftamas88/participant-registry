@@ -6,15 +6,13 @@ import (
 )
 
 type Response struct {
-	OperationID string      `json:"operation_id"`
-	Data        interface{} `json:"data"`
-	MetaData    interface{} `json:"metadata"`
+	Data     interface{} `json:"data"`
+	MetaData interface{} `json:"metadata"`
 }
 
 type ErrorResponse struct {
-	OperationID string      `json:"operation_id"`
-	Error       interface{} `json:"error"`
-	MetaData    interface{} `json:"metadata"`
+	Error    interface{} `json:"error"`
+	MetaData interface{} `json:"metadata"`
 }
 
 func WriteJSONResponse(w http.ResponseWriter, code int, response interface{}) {

@@ -11,7 +11,6 @@ type WellKnownController struct {
 
 func (c *WellKnownController) Root(w http.ResponseWriter, _ *http.Request) {
 	WriteJSONResponse(w, http.StatusOK, Response{
-		OperationID: "root_get",
 		Data: map[string]string{
 			"service":     "grail-participant-registry",
 			"version":     c.AppVersion,
@@ -22,7 +21,6 @@ func (c *WellKnownController) Root(w http.ResponseWriter, _ *http.Request) {
 
 func (c *WellKnownController) Health(w http.ResponseWriter, _ *http.Request) {
 	WriteJSONResponse(w, http.StatusOK, Response{
-		OperationID: "health_get",
 		Data: map[string]string{
 			"status": "OK",
 		},
@@ -38,15 +36,14 @@ func (c *WellKnownController) Version(w http.ResponseWriter, _ *http.Request) {
 
 func (c *WellKnownController) ServiceInformation(w http.ResponseWriter, r *http.Request) {
 	WriteJSONResponse(w, http.StatusOK, Response{
-		OperationID: "service_get",
 		Data: map[string]string{
-			"service_name":                 "",
-			"original_build_specification": "",
-			"slos":                         "",
-			"api_documentation":            "",
-			"repository":                   "",
-			"description":                  "",
-			"develop_url":                  "",
+			"service_name":      "Grail - participant registry",
+			"slos":              "",
+			"api_documentation": "",
+			"repository":        "https://gitlab.com/ftamas88/grail",
+			"description": "This is a participant registry microservice which supports adding, updating, " +
+				"removing and retrieving personal information about participants in the study.",
+			"develop_url": "http://localhost:3000",
 		},
 	})
 }
