@@ -3,19 +3,14 @@ package app
 import (
 	"context"
 	"fmt"
-	"grail-participant-registry/internal/domain"
+	"grail-participant-registry/internal/controller"
+	"grail-participant-registry/internal/routing"
 	"grail-participant-registry/internal/service"
 	"grail-participant-registry/internal/storage/memory"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
-
-	"github.com/google/uuid"
-
-	"grail-participant-registry/internal/controller"
-	"grail-participant-registry/internal/routing"
 
 	"github.com/sirupsen/logrus"
 )
@@ -63,25 +58,6 @@ func New(conf Config) *App {
 			},
 		},
 	)
-
-	go func() {
-		// Random seed for testing
-		<-time.After(3 * time.Second)
-		p1 := domain.Participant{
-			ID:          domain.ParticipantID(uuid.New().String()),
-			Reference:   domain.ParticipantReference("CD-12-EF"),
-			Name:        "Test",
-			DateOfBirth: time.Now(),
-			Phone:       "123-123-123",
-			Address:     domain.ParticipantAddress{},
-		}
-
-		_ = pRepo.Add(p1)
-
-		<-time.After(3 * time.Second)
-		p1.Name = "Test2"
-		_ = pRepo.Update(p1)
-	}()
 
 	server := &http.Server{
 		Addr:    fmt.Sprintf(":%d", conf.HTTPPort),
