@@ -2,8 +2,9 @@ package memory
 
 import (
 	"grail-participant-registry/internal/domain"
-	"sort"
 	"sync"
+
+	"github.com/sirupsen/logrus"
 )
 
 type ParticipantRepository struct {
@@ -20,8 +21,8 @@ func NewParticipantRepository() *ParticipantRepository {
 func (repo *ParticipantRepository) FindByID(participantID domain.ParticipantID) (domain.Participant, error) {
 	repo.mu.RLock()
 	defer repo.mu.RUnlock()
-	participant, ok := repo.participants[participantID]
 
+	participant, ok := repo.participants[participantID]
 	if !ok {
 		return domain.Participant{}, domain.ErrParticipantNotFound
 	}
@@ -30,25 +31,36 @@ func (repo *ParticipantRepository) FindByID(participantID domain.ParticipantID) 
 }
 
 func (repo *ParticipantRepository) FindAll() ([]domain.Participant, error) {
+	repo.mu.RLock()
+	defer repo.mu.RUnlock()
+
 	participants := make([]domain.Participant, 0)
 
-	repo.mu.RLock()
 	for _, participant := range repo.participants {
 		participants = append(participants, participant)
 	}
-	repo.mu.RUnlock()
 
+	/* Optional
 	sort.Slice(participants, func(i, j int) bool {
 		return participants[i].Name < participants[j].Name
 	})
+	*/
 
 	return participants, nil
 }
 
 func (repo *ParticipantRepository) Add(participant domain.Participant) error {
 	repo.mu.Lock()
-	repo.participants[domain.ParticipantID(participant.ID)] = participant
-	repo.mu.Unlock()
+	defer repo.mu.Unlock()
+
+	_, ok := repo.participants[participant.ID]
+	if !ok {
+		logrus.Warnf("participant already exists with the following ref: [%s]", participant.Reference)
+
+		return domain.ErrParticipantAlreadyExists
+	}
+
+	repo.participants[participant.ID] = participant
 
 	return nil
 }
@@ -57,28 +69,30 @@ func (repo *ParticipantRepository) Update(participant domain.Participant) error 
 	repo.mu.Lock()
 	defer repo.mu.Unlock()
 
-	_, ok := repo.participants[domain.ParticipantID(participant.ID)]
+	_, ok := repo.participants[participant.ID]
 	if !ok {
+		logrus.Warnf("participant does not exists with the following ref: [%s]", participant.Reference)
+
 		return domain.ErrParticipantNotFound
 	}
 
-	repo.participants[domain.ParticipantID(participant.ID)] = participant
+	repo.participants[participant.ID] = participant
 
 	return nil
 }
 
 func (repo *ParticipantRepository) Remove(participantID domain.ParticipantID) error {
 	repo.mu.Lock()
-	_, ok := repo.participants[participantID]
+	defer repo.mu.Unlock()
 
+	_, ok := repo.participants[participantID]
 	if !ok {
-		repo.mu.Unlock()
+		logrus.Warnf("participant does not exists with the following id: [%s]", participantID)
 
 		return domain.ErrParticipantNotFound
 	}
 
 	delete(repo.participants, participantID)
-	repo.mu.Unlock()
 
 	return nil
 }

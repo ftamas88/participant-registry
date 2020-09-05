@@ -6,13 +6,15 @@ import (
 )
 
 type ParticipantID string
+type ParticipantReference string
 
 type Participant struct {
-	ID          string             `json:"id"`
-	Name        string             `json:"name"`
-	DateOfBirth time.Time          `json:"date_of_birth"`
-	Phone       string             `json:"phone"`
-	Address     ParticipantAddress `json:"address"`
+	ID          ParticipantID        `json:"id"`
+	Reference   ParticipantReference `json:"reference"`
+	Name        string               `json:"name"`
+	DateOfBirth time.Time            `json:"date_of_birth"`
+	Phone       string               `json:"phone"`
+	Address     ParticipantAddress   `json:"address"`
 }
 
 type ParticipantAddress struct {
@@ -38,5 +40,6 @@ type ParticipantRepository interface {
 }
 
 var (
-	ErrParticipantNotFound = errors.New("participant not found")
+	ErrParticipantNotFound      = errors.New("participant not found")
+	ErrParticipantAlreadyExists = errors.New("participant already exists in the system")
 )
