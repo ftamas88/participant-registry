@@ -89,3 +89,8 @@ doc: ## Launches the godoc server locally. You can access it through a browser a
 .PHONY: version
 version: ## Displays the current version of the Go toolchain.
 	go version
+
+.PHONY: api-docs
+api-docs: ## runs a webserver which compiles and serves the openapi docs
+	echo "redoc server listening on http://localhost:8100/ and watching for file changes"
+	docker run -it --rm -p 8100:80 -v ${PWD}/apidoc/:/usr/share/nginx/html/docs/ -e SPEC_URL=docs/docs.yaml redocly/redoc

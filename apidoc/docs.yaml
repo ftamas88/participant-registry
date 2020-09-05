@@ -1,0 +1,70 @@
+openapi: "3.0.2"
+info:
+  version: "1.0.0"
+  title: "Participant registry"
+  description: |
+    This is a participant registry microservice which supports adding, updating, removing and retrieving personal information about participants in the study.
+
+servers:
+  - url: "https://localhost:3000/"
+
+paths:
+  /api/v1/participants/create:
+    post:
+      summary: "Add a new participant"
+      description: |
+        The registry will store the new participant data
+      requestBody:
+        required: true
+      responses:
+        201:
+          description: "The request was successfully processed."
+        400:
+          description: "The request contains an invalid payload."
+        5XX:
+          description: "An unexpected error occurred on the server side."
+
+  /api/v1/participants/{ref}:
+    get:
+      summary: "Fetch an existing participant data"
+      description: |
+        The registry will retrieve an existing participant data
+      requestBody:
+        required: true
+      responses:
+        200:
+          description: "The request was successfully processed."
+        400:
+          description: "The request contains an invalid payload."
+        5XX:
+          description: "An unexpected error occurred on the server side."
+
+  /api/v1/participants/{ref}/update:
+    post:
+      summary: "Update a participant"
+      description: |
+        The registry will update an existing participant data
+      requestBody:
+        required: true
+      responses:
+        200:
+          description: "The request was successfully processed."
+        400:
+          description: "The request contains an invalid payload."
+        5XX:
+          description: "An unexpected error occurred on the server side."
+
+  /api/v1/participants/{ref}/delete:
+    post:
+      summary: "Remove a participant"
+      description: |
+        The registry will remove an existing participant
+      requestBody:
+        required: true
+      responses:
+        200:
+          description: "The request was successfully processed."
+        400:
+          description: "The request contains an invalid payload."
+        5XX:
+          description: "An unexpected error occurred on the server side."
