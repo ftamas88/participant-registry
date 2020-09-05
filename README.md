@@ -28,3 +28,48 @@ Simply type `make run` command.
 
 If you don't have `Go` installed on your system, you can use `Docker` too.  
 With the `make docker-up` command you can run the service without any dependency.
+
+## Application
+
+### Adding a new participant
+Send a **POST** request to the `/api/v1/participants/create` endpoint with a sample payload like this:
+```json
+{
+	"reference": "aa-11-bb",
+	"name": "John Doe",
+	"date_of_birth": "2020-09-05T18:21:25.455Z",
+	"phone": "123-456-789",
+	"address": {
+		"address_type": "flat",
+		"street_name": "Test Street",
+		"post_code": "P0S C0D",
+		"town_name": "Town",
+		"address_line": [
+			"Address line 1",
+			"Address line 2"
+		]
+	}
+}
+```
+
+
+### Updating an existing participant
+Send a **POST** request to the `/api/v1/participants/{{reference}}/update` endpoint with a sample payload like this:
+```json
+{
+	"reference": "aa-11-bb",
+	"name": "John Doe",
+	"date_of_birth": "2020-09-05T18:21:25.455Z",
+	"phone": "123-456-789",
+	"address": {
+		"address_type": "flat",
+		"street_name": "Test Street",
+		"post_code": "P0S C0D",
+		"town_name": "Town",
+		"address_line": [
+			"Address line 1",
+			"Address line 2"
+		]
+	}
+}
+```

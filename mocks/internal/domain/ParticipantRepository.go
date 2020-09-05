@@ -50,20 +50,20 @@ func (_m *ParticipantRepository) FindAll() ([]domain.Participant, error) {
 	return r0, r1
 }
 
-// FindByID provides a mock function with given fields: participantID
-func (_m *ParticipantRepository) FindByID(participantID domain.ParticipantID) (domain.Participant, error) {
-	ret := _m.Called(participantID)
+// FindByID provides a mock function with given fields: participantRef
+func (_m *ParticipantRepository) FindByID(participantRef domain.ParticipantReference) (domain.Participant, error) {
+	ret := _m.Called(participantRef)
 
 	var r0 domain.Participant
-	if rf, ok := ret.Get(0).(func(domain.ParticipantID) domain.Participant); ok {
-		r0 = rf(participantID)
+	if rf, ok := ret.Get(0).(func(domain.ParticipantReference) domain.Participant); ok {
+		r0 = rf(participantRef)
 	} else {
 		r0 = ret.Get(0).(domain.Participant)
 	}
 
 	var r1 error
-	if rf, ok := ret.Get(1).(func(domain.ParticipantID) error); ok {
-		r1 = rf(participantID)
+	if rf, ok := ret.Get(1).(func(domain.ParticipantReference) error); ok {
+		r1 = rf(participantRef)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -71,13 +71,13 @@ func (_m *ParticipantRepository) FindByID(participantID domain.ParticipantID) (d
 	return r0, r1
 }
 
-// Remove provides a mock function with given fields: participantID
-func (_m *ParticipantRepository) Remove(participantID domain.ParticipantID) error {
-	ret := _m.Called(participantID)
+// Remove provides a mock function with given fields: participantRef
+func (_m *ParticipantRepository) Remove(participantRef domain.ParticipantReference) error {
+	ret := _m.Called(participantRef)
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(domain.ParticipantID) error); ok {
-		r0 = rf(participantID)
+	if rf, ok := ret.Get(0).(func(domain.ParticipantReference) error); ok {
+		r0 = rf(participantRef)
 	} else {
 		r0 = ret.Error(0)
 	}

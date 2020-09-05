@@ -5,6 +5,15 @@ import (
 	"time"
 )
 
+//go:generate mockery -name=ParticipantRepository
+type ParticipantRepository interface {
+	FindByID(participantRef ParticipantReference) (Participant, error)
+	FindAll() ([]Participant, error)
+	Add(participant Participant) error
+	Update(participant Participant) error
+	Remove(participantRef ParticipantReference) error
+}
+
 type ParticipantID string
 type ParticipantReference string
 
@@ -28,15 +37,6 @@ type ParticipantAddress struct {
 	CountrySubDivision string   `json:"country_sub_division,omitempty"`
 	Country            string   `json:"country,omitempty"`
 	AddressLine        []string `json:"address_line,omitempty"`
-}
-
-//go:generate mockery -name=ParticipantRepository
-type ParticipantRepository interface {
-	FindByID(participantID ParticipantID) (Participant, error)
-	FindAll() ([]Participant, error)
-	Add(participant Participant) error
-	Update(participant Participant) error
-	Remove(participantID ParticipantID) error
 }
 
 var (
