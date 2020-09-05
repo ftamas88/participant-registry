@@ -12,6 +12,7 @@ help: ## Displays the Makefile help.
 setup: ## Downloads and install various libs for development.
 	go get github.com/golangci/golangci-lint/cmd/golangci-lint
 	go get golang.org/x/tools/cmd/goimports
+	go get github.com/vektra/mockery/v2/.../
 
 .PHONY: build
 build: lint ## Builds project binary.

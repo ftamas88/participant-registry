@@ -3,10 +3,16 @@ package app
 import (
 	"context"
 	"fmt"
+	"grail-participant-registry/internal/domain"
+	"grail-participant-registry/internal/service"
+	"grail-participant-registry/internal/storage/memory"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
+
+	"github.com/google/uuid"
 
 	"grail-participant-registry/internal/controller"
 	"grail-participant-registry/internal/routing"
@@ -49,14 +55,33 @@ func New(conf Config) *App {
 		"app_commit_version": CommitHash(),
 	})
 
+	pRepo := memory.NewParticipantRepository()
+
 	router := routing.NewRouter(
 		&routing.RouterConfig{
 			WellKnown: &controller.WellKnownController{
 				AppVersion:    Version(),
 				AppCommitHash: CommitHash(),
 			},
+			Participant: &controller.ParticipantController{
+				Service: service.NewParticipantService(
+					pRepo,
+				),
+			},
 		},
 	)
+
+	go func() {
+		// Random seed for testing
+		<-time.After(3 * time.Second)
+		_ = pRepo.Add(domain.Participant{
+			ID:          uuid.New().String(),
+			Name:        "Test",
+			DateOfBirth: time.Now(),
+			Phone:       "123-123-123",
+			Address:     domain.ParticipantAddress{},
+		})
+	}()
 
 	server := &http.Server{
 		Addr:    fmt.Sprintf(":%d", conf.HTTPPort),

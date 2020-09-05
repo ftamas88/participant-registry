@@ -11,6 +11,12 @@ type Response struct {
 	MetaData    interface{} `json:"metadata"`
 }
 
+type ErrorResponse struct {
+	OperationID string      `json:"operation_id"`
+	Error       interface{} `json:"error"`
+	MetaData    interface{} `json:"metadata"`
+}
+
 func WriteJSONResponse(w http.ResponseWriter, code int, response interface{}) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
