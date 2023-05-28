@@ -1,4 +1,4 @@
-# GRAIL - New Beginnings - Participant Registry
+# Participant Registry
 This is a participant registry microservice which supports adding, updating, removing and retrieving personal information about participants in the study.
 
 ## First steps
